@@ -45,4 +45,20 @@ describe('katex', () => {
 		const warned = warnSpy.mock.calls.some(args => String(args[0]).includes('LaTeX-incompatible'));
 		expect(warned).toBe(false);
 	});
+	test('does not consume the rest of the document when display math is unclosed', () => {
+		const md = createMarkdownIt();
+		const output = md.render([
+			'Normal text',
+			'',
+			'$$',
+			'Unclosed math',
+			'',
+			'## Lunch',
+			'- Cafe A',
+		].join('\n'));
+
+		expect(output).toContain('<h2>Lunch</h2>');
+		expect(output).toContain('<li>Cafe A</li>');
+	});
+
 });

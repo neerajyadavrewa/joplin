@@ -301,6 +301,7 @@ function math_block(state: StateBlock, start: number, end: number, silent: boole
 			found = true;
 		}
 	}
+	if (!found) return false;
 
 	state.line = next + 1;
 
